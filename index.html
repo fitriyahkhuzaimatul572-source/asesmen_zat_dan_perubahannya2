@@ -1,0 +1,1923 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Remedial Asesmen Sumatif IPA VII - MTsN 1 Kota Malang</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts Inter -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        emerald: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body { font-family: 'Inter', sans-serif; background-color: #f3f4f6; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; height: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: #f1f1f1; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #10b981; border-radius: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-thumb:hover { background: #059669; }
+        @media print {
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+            body { background-color: white !important; font-size: 12pt; }
+        }
+    </style>
+</head>
+<body class="text-slate-800 antialiased min-h-screen flex flex-col justify-between">
+
+    <!-- HEADER APP -->
+    <header id="mainHeader" class="bg-gradient-to-r from-emerald-800 via-teal-800 to-emerald-900 text-white shadow-lg sticky top-0 z-40 border-b-4 border-amber-400">
+        <div class="max-w-7xl mx-auto px-4 py-3 flex flex-wrap items-center justify-between gap-4">
+            <div class="flex items-center space-x-3">
+                <div id="logoContainer" class="w-12 h-12 bg-white/10 rounded-full flex items-center justify-center border border-amber-300/40 p-1 shadow-inner">
+                    <i class="fa-solid fa-flask-vial text-amber-300 text-2xl" id="headerIcon"></i>
+                </div>
+                <div>
+                    <h1 id="appTitleText" class="text-lg md:text-xl font-bold tracking-wide text-amber-300 uppercase leading-tight">Remedial Asesmen Sumatif IPA Kelas VII</h1>
+                    <p id="appSubTitleText" class="text-xs md:text-sm text-emerald-100 font-medium">Materi: Zat dan Perubahannya | <span id="appSchoolText">MTsN 1 Kota Malang</span></p>
+                    <p id="appTeacherText" class="text-xs text-amber-200/90 italic">Disusun oleh: Khuzaimatul Fitriyah, S.Si., M.Si. (Guru IPA MTsN 1 Kota Malang)</p>
+                </div>
+            </div>
+            
+            <div id="headerRightInfo" class="flex items-center space-x-3">
+                <!-- Status User / Navigation buttons inserted by JS -->
+            </div>
+        </div>
+    </header>
+
+    <!-- MAIN CONTAINER -->
+    <main class="flex-grow max-w-7xl w-full mx-auto p-4 md:p-6">
+
+        <!-- VIEW 1: AUTH / LOGIN SCREEN -->
+        <section id="authView" class="max-w-md mx-auto my-6 bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 transition-all duration-300">
+            <!-- Auth Tab Buttons -->
+            <div class="flex border-b border-slate-200 bg-slate-50">
+                <button id="tabStudentBtn" onclick="switchAuthTab('student')" class="flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-emerald-600 text-emerald-700 bg-white">
+                    <i class="fa-solid fa-user-graduate mr-2"></i>Akses Siswa
+                </button>
+                <button id="tabAdminBtn" onclick="switchAuthTab('admin')" class="flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+                    <i class="fa-solid fa-user-gear mr-2"></i>Akses Guru / Admin
+                </button>
+            </div>
+
+            <div class="p-6">
+                <!-- FORM STUDENT LOGIN -->
+                <form id="studentLoginForm" onsubmit="handleStudentLogin(event)" class="space-y-4">
+                    <div class="bg-emerald-50 border-l-4 border-emerald-600 p-3 rounded-r text-xs text-emerald-800 font-medium">
+                        <i class="fa-solid fa-circle-info mr-1 text-emerald-600"></i>
+                        Silakan isi identitas dengan benar. Kesempatan mengerjakan hanya <strong>1 kali</strong>. KKM = <span class="kkmValueDisplay">84</span>.
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Nama Lengkap Siswa</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user absolute left-3 top-3 text-slate-400"></i>
+                            <input type="text" id="stdName" required placeholder="Contoh: Ahmad Rizky" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Kelas</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-graduation-cap absolute left-3 top-3 text-slate-400"></i>
+                            <select id="stdClass" required class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none bg-white">
+                                <option value="">-- Pilih Kelas --</option>
+                                <option value="VII A">VII A</option>
+                                <option value="VII B">VII B</option>
+                                <option value="VII C">VII C</option>
+                                <option value="VII D">VII D</option>
+                                <option value="VII E">VII E</option>
+                                <option value="VII F">VII F</option>
+                                <option value="VII G">VII G</option>
+                                <option value="VII H">VII H</option>
+                                <option value="VII I">VII I</option>
+                                <option value="VII J">VII J</option>
+                                <option value="VII K">VII K</option>
+                                <option value="VII L">VII L</option>
+                                <option value="VII M">VII M</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">No. Presensi (Password)</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-key absolute left-3 top-3 text-slate-400"></i>
+                            <input type="password" id="stdPresensi" required placeholder="Nomor presensi (contoh: 12)" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-emerald-500 focus:border-emerald-500 outline-none">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-emerald-600 hover:bg-emerald-700 text-white font-bold py-3 rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
+                        <span>Mulai Mengerjakan</span>
+                        <i class="fa-solid fa-arrow-right"></i>
+                    </button>
+                </form>
+
+                <!-- FORM ADMIN LOGIN -->
+                <form id="adminLoginForm" onsubmit="handleAdminLogin(event)" class="space-y-4 hidden">
+                    <div class="bg-amber-50 border-l-4 border-amber-500 p-3 rounded-r text-xs text-amber-800 font-medium">
+                        <i class="fa-solid fa-shield-halved mr-1 text-amber-600"></i>
+                        Akses khusus Guru / Pengelola Soal. Default username: <code class="bg-amber-100 px-1 rounded text-amber-900 font-bold">admin</code>, pass: <code class="bg-amber-100 px-1 rounded text-amber-900 font-bold">admin123</code>.
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Username Admin</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-user-shield absolute left-3 top-3 text-slate-400"></i>
+                            <input type="text" id="adminUser" required placeholder="admin" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-bold uppercase tracking-wider text-slate-600 mb-1">Password Admin</label>
+                        <div class="relative">
+                            <i class="fa-solid fa-lock absolute left-3 top-3 text-slate-400"></i>
+                            <input type="password" id="adminPass" required placeholder="••••••••" class="w-full pl-9 pr-3 py-2.5 rounded-lg border border-slate-300 text-sm focus:ring-2 focus:ring-amber-500 focus:border-amber-500 outline-none">
+                        </div>
+                    </div>
+
+                    <button type="submit" class="w-full bg-amber-600 hover:bg-amber-700 text-white font-bold py-3 rounded-xl shadow-md transition transform active:scale-95 flex items-center justify-center space-x-2">
+                        <span>Masuk Mode Admin</span>
+                        <i class="fa-solid fa-right-to-bracket"></i>
+                    </button>
+                </form>
+            </div>
+        </section>
+
+
+        <!-- VIEW 2: EXAM WORKSPACE (CBT INTERFACE) -->
+        <section id="examView" class="hidden space-y-6">
+            <!-- TOP EXAM BAR -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-user"></i>
+                    </div>
+                    <div>
+                        <p class="text-xs text-slate-500 uppercase font-semibold">Peserta Ujian</p>
+                        <p id="examStudentInfo" class="font-bold text-slate-800 text-sm md:text-base">-</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-4">
+                    <!-- TIMER -->
+                    <div class="bg-slate-900 text-amber-400 font-mono text-xl md:text-2xl font-bold px-4 py-2 rounded-xl shadow-inner flex items-center space-x-2 border border-slate-700">
+                        <i class="fa-solid fa-stopwatch animate-pulse text-amber-400 text-base"></i>
+                        <span id="timerDisplay">60:00</span>
+                    </div>
+
+                    <button onclick="confirmSubmitExam()" class="bg-emerald-600 hover:bg-emerald-700 text-white px-5 py-2.5 rounded-xl font-bold shadow-md transition flex items-center space-x-2 text-sm">
+                        <i class="fa-solid fa-paper-plane"></i>
+                        <span>Selesaikan Ujian</span>
+                    </button>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-4 gap-6">
+                <!-- LEFT/MAIN: QUESTION DISPLAY -->
+                <div class="lg:col-span-3 bg-white rounded-2xl p-6 shadow-sm border border-slate-200 flex flex-col justify-between min-h-[480px]">
+                    <div>
+                        <!-- Question Header -->
+                        <div class="flex items-center justify-between border-b pb-4 mb-4">
+                            <span id="questionCategoryTag" class="bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full uppercase tracking-wider">
+                                Soal No. <span id="currentQNum">1</span> / 40
+                            </span>
+                            <span id="questionTypeTag" class="bg-slate-100 text-slate-600 text-xs font-semibold px-2.5 py-1 rounded">
+                                Pilihan Ganda
+                            </span>
+                        </div>
+
+                        <!-- Question Text & Stimulus -->
+                        <div id="questionContent" class="prose max-w-none text-slate-800 text-base md:text-lg leading-relaxed mb-6 font-medium">
+                            <!-- Question rendered here -->
+                        </div>
+
+                        <!-- Answer Input Options -->
+                        <div id="answerContainer" class="space-y-3">
+                            <!-- Options rendered dynamically based on type -->
+                        </div>
+                    </div>
+
+                    <!-- Bottom Nav & Ragu-ragu -->
+                    <div class="pt-6 border-t mt-6 flex flex-wrap items-center justify-between gap-3">
+                        <button id="prevQBtn" onclick="navigateQuestion(-1)" class="bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold px-4 py-2 rounded-xl transition text-sm flex items-center space-x-2 disabled:opacity-50">
+                            <i class="fa-solid fa-chevron-left"></i>
+                            <span>Sebelumnya</span>
+                        </button>
+
+                        <label class="inline-flex items-center space-x-2 cursor-pointer bg-amber-50 px-3 py-2 rounded-lg border border-amber-200">
+                            <input type="checkbox" id="flagCheck" onchange="toggleFlagCurrentQuestion()" class="w-4 h-4 text-amber-600 rounded focus:ring-amber-500">
+                            <span class="text-xs font-bold text-amber-800">Ragu-ragu</span>
+                        </label>
+
+                        <button id="nextQBtn" onclick="navigateQuestion(1)" class="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold px-5 py-2 rounded-xl transition text-sm flex items-center space-x-2 shadow-sm">
+                            <span>Berikutnya</span>
+                            <i class="fa-solid fa-chevron-right"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- RIGHT: QUESTION PALETTE NAVIGATION -->
+                <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 flex flex-col">
+                    <h3 class="text-xs font-bold uppercase tracking-wider text-slate-500 mb-3 flex items-center justify-between">
+                        <span>Navigasi Soal</span>
+                        <span class="text-emerald-600 font-normal"><span id="answeredCount">0</span>/40 Terjawab</span>
+                    </h3>
+
+                    <div id="questionGrid" class="grid grid-cols-5 gap-2 custom-scrollbar max-h-[350px] overflow-y-auto pr-1">
+                        <!-- 40 Question Buttons -->
+                    </div>
+
+                    <!-- Legend -->
+                    <div class="mt-4 pt-4 border-t text-xs space-y-2 text-slate-600">
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded bg-emerald-600 inline-block"></span>
+                            <span>Sudah Terjawab</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded bg-amber-400 inline-block"></span>
+                            <span>Ragu-ragu</span>
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="w-3 h-3 rounded bg-slate-100 border border-slate-300 inline-block"></span>
+                            <span>Belum Diisi</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VIEW 3: RESULT / TRANSCRIPT SCREEN -->
+        <section id="resultView" class="hidden max-w-4xl mx-auto bg-white rounded-2xl shadow-xl overflow-hidden border border-slate-200 my-4">
+            <div id="printableArea" class="p-6 md:p-8">
+                <!-- Header Laporan -->
+                <div class="text-center border-b pb-6 mb-6">
+                    <div class="flex justify-center items-center space-x-3 mb-2">
+                        <i class="fa-solid fa-school text-emerald-700 text-3xl"></i>
+                        <h2 class="text-xl md:text-2xl font-extrabold text-slate-800" id="resSchoolTitle">MTsN 1 KOTA MALANG</h2>
+                    </div>
+                    <h3 class="text-lg font-bold text-emerald-800 uppercase">Laporan Hasil Remedial Asesmen Sumatif IPA</h3>
+                    <p class="text-xs text-slate-500">Materi: Zat dan Perubahannya | Guru Pengampu: Khuzaimatul Fitriyah, S.Si., M.Si.</p>
+                </div>
+
+                <!-- Identity Card & Score Banner -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+                    <!-- Identity -->
+                    <div class="md:col-span-2 bg-slate-50 p-4 rounded-xl border border-slate-200 space-y-2 text-sm">
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="text-slate-500 font-medium">Nama Siswa:</span>
+                            <span id="resStdName" class="font-bold text-slate-800">-</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="text-slate-500 font-medium">Kelas:</span>
+                            <span id="resStdClass" class="font-bold text-slate-800">-</span>
+                        </div>
+                        <div class="flex justify-between border-b pb-1">
+                            <span class="text-slate-500 font-medium">No. Presensi:</span>
+                            <span id="resStdPresensi" class="font-bold text-slate-800">-</span>
+                        </div>
+                        <div class="flex justify-between">
+                            <span class="text-slate-500 font-medium">Waktu Selesai:</span>
+                            <span id="resTime" class="font-medium text-slate-700">-</span>
+                        </div>
+                    </div>
+
+                    <!-- Score Card -->
+                    <div id="resScoreCard" class="bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-xl p-5 flex flex-col items-center justify-center text-center shadow-lg">
+                        <span class="text-xs uppercase font-bold text-emerald-100 tracking-wider">Skor Total Akhir</span>
+                        <div class="text-4xl md:text-5xl font-black my-1" id="resFinalScore">0</div>
+                        <div id="resStatusBadge" class="mt-1 px-3 py-1 rounded-full text-xs font-bold bg-white text-emerald-800 shadow">
+                            MEMENUHI KKM (84)
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Breakdown Score Table -->
+                <div class="mb-8">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-slate-700 mb-3">Rincian Perolehan Nilai:</h4>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-xs md:text-sm text-left border-collapse border border-slate-200">
+                            <thead>
+                                <tr class="bg-slate-100 text-slate-700">
+                                    <th class="p-2.5 border border-slate-200">Jenis Soal</th>
+                                    <th class="p-2.5 border border-slate-200 text-center">Jumlah Soal</th>
+                                    <th class="p-2.5 border border-slate-200 text-center">Jawaban Benar</th>
+                                    <th class="p-2.5 border border-slate-200 text-center">Skor Maksimal</th>
+                                    <th class="p-2.5 border border-slate-200 text-center">Skor Diraih</th>
+                                </tr>
+                            </thead>
+                            <tbody id="breakdownTableBody">
+                                <!-- Computed via JS -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- Detailed Answer Review -->
+                <div class="border-t pt-6">
+                    <h4 class="text-sm font-bold uppercase tracking-wider text-slate-700 mb-4">Evaluasi Pembahasan Jawaban:</h4>
+                    <div id="answerReviewList" class="space-y-4 max-h-96 overflow-y-auto pr-2 custom-scrollbar">
+                        <!-- Dynamic list of evaluation -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- Action Buttons -->
+            <div class="bg-slate-50 px-6 py-4 border-t flex flex-wrap items-center justify-between gap-3 no-print">
+                <button onclick="returnToHome()" class="bg-slate-600 hover:bg-slate-700 text-white font-semibold px-4 py-2.5 rounded-xl text-sm transition">
+                    <i class="fa-solid fa-house mr-1.5"></i>Kembali ke Beranda
+                </button>
+
+                <div class="flex space-x-2">
+                    <button onclick="window.print()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm shadow-sm transition flex items-center space-x-2">
+                        <i class="fa-solid fa-print"></i>
+                        <span>Cetak / Download Hasil (PDF)</span>
+                    </button>
+                </div>
+            </div>
+        </section>
+
+
+        <!-- VIEW 4: ADMIN DASHBOARD PANEL -->
+        <section id="adminView" class="hidden space-y-6">
+            <!-- Admin Navbar Header -->
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex flex-wrap items-center justify-between gap-4">
+                <div class="flex items-center space-x-3">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold">
+                        <i class="fa-solid fa-user-shield"></i>
+                    </div>
+                    <div>
+                        <h2 class="text-base font-bold text-slate-800">Panel Pengelola Guru / Admin</h2>
+                        <p class="text-xs text-slate-500">Kelola soal, logo, uji coba aplikasi, dan rekapitulasi nilai</p>
+                    </div>
+                </div>
+
+                <div class="flex items-center space-x-2">
+                    <button onclick="launchAdminTryout()" class="bg-indigo-600 hover:bg-indigo-700 text-white text-xs font-bold px-3.5 py-2 rounded-xl transition shadow flex items-center space-x-1.5">
+                        <i class="fa-solid fa-vial"></i>
+                        <span>Uji Coba Ujian (Sebagai Siswa)</span>
+                    </button>
+
+                    <button onclick="logoutAdmin()" class="bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold px-3.5 py-2 rounded-xl transition flex items-center space-x-1.5">
+                        <i class="fa-solid fa-right-from-bracket"></i>
+                        <span>Keluar Admin</span>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Admin Sub-Navigation Tabs -->
+            <div class="flex border-b border-slate-200 bg-white rounded-t-xl px-4 pt-2">
+                <button id="admTabRecap" onclick="switchAdminTab('recap')" class="py-3 px-4 font-bold text-sm border-b-2 border-emerald-600 text-emerald-700">
+                    <i class="fa-solid fa-table-list mr-1.5"></i>Rekapitulasi Nilai
+                </button>
+                <button id="admTabQuestions" onclick="switchAdminTab('questions')" class="py-3 px-4 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+                    <i class="fa-solid fa-pen-to-square mr-1.5"></i>Edit Soal (40 Soal)
+                </button>
+                <button id="admTabSettings" onclick="switchAdminTab('settings')" class="py-3 px-4 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+                    <i class="fa-solid fa-sliders mr-1.5"></i>Pengaturan Header & Logo
+                </button>
+                <button id="admTabPassword" onclick="switchAdminTab('password')" class="py-3 px-4 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800">
+                    <i class="fa-solid fa-key mr-1.5"></i>Ganti Password
+                </button>
+            </div>
+
+            <!-- ADMIN TAB 1: REKAPITULASI NILAI -->
+            <div id="admSectionRecap" class="bg-white rounded-b-2xl p-6 shadow-sm border border-slate-200 space-y-4">
+                <div class="flex flex-wrap items-center justify-between gap-4">
+                    <h3 class="font-bold text-slate-800 text-base">Daftar Hasil Pengerjaan Siswa</h3>
+                    <div class="flex space-x-2">
+                        <button onclick="exportRecapCSV()" class="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold px-3 py-2 rounded-lg transition flex items-center space-x-1">
+                            <i class="fa-solid fa-file-excel"></i>
+                            <span>Unduh Excel / CSV</span>
+                        </button>
+                        <button onclick="clearRecapData()" class="bg-rose-50 hover:bg-rose-100 text-rose-600 text-xs font-bold px-3 py-2 rounded-lg border border-rose-200 transition">
+                            <i class="fa-solid fa-trash-can mr-1"></i>Hapus Rekap
+                        </button>
+                    </div>
+                </div>
+
+                <div class="overflow-x-auto">
+                    <table class="w-full text-xs md:text-sm text-left border-collapse border border-slate-200">
+                        <thead>
+                            <tr class="bg-slate-100 text-slate-700">
+                                <th class="p-3 border">No</th>
+                                <th class="p-3 border">Nama Siswa</th>
+                                <th class="p-3 border">Kelas</th>
+                                <th class="p-3 border">Presensi</th>
+                                <th class="p-3 border">Skor Total</th>
+                                <th class="p-3 border">Status KKM (84)</th>
+                                <th class="p-3 border">Waktu Selesai</th>
+                                <th class="p-3 border text-center">Aksi</th>
+                            </tr>
+                        </thead>
+                        <tbody id="recapTableBody">
+                            <!-- Populated dynamically -->
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ADMIN TAB 2: EDIT SOAL -->
+            <div id="admSectionQuestions" class="hidden bg-white rounded-b-2xl p-6 shadow-sm border border-slate-200 space-y-6">
+                <div class="flex items-center justify-between">
+                    <h3 class="font-bold text-slate-800 text-base">Editor Bank Soal</h3>
+                    <div class="w-48">
+                        <select id="adminQuestionSelect" onchange="loadQuestionToEditor(this.value)" class="w-full p-2 border border-slate-300 rounded-lg text-xs font-bold">
+                            <!-- 40 Question Options populated by JS -->
+                        </select>
+                    </div>
+                </div>
+
+                <div id="editorFormContainer" class="bg-slate-50 p-5 rounded-xl border border-slate-200 space-y-4">
+                    <!-- Dynamic Question Form loaded here -->
+                </div>
+            </div>
+
+            <!-- ADMIN TAB 3: PENGATURAN HEADER & LOGO -->
+            <div id="admSectionSettings" class="hidden bg-white rounded-b-2xl p-6 shadow-sm border border-slate-200 max-w-2xl space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Pengaturan Identitas & Logo Aplikasi</h3>
+                <form onsubmit="saveAppSettings(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Judul Utama</label>
+                        <input type="text" id="cfgTitle" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Nama Sekolah / Instansi</label>
+                        <input type="text" id="cfgSchool" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Nama Guru / Penyusun</label>
+                        <input type="text" id="cfgTeacher" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">KKM Kelulusan</label>
+                            <input type="number" id="cfgKKM" min="1" max="100" required class="w-full p-2.5 border rounded-lg text-sm">
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Durasi Ujian (Menit)</label>
+                            <input type="number" id="cfgDuration" min="5" max="180" required class="w-full p-2.5 border rounded-lg text-sm">
+                        </div>
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Ikon Logo (FontAwesome Class)</label>
+                        <input type="text" id="cfgIcon" placeholder="fa-solid fa-flask-vial" class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <button type="submit" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition">
+                        Simpan Pengaturan
+                    </button>
+                </form>
+            </div>
+
+            <!-- ADMIN TAB 4: GANTI PASSWORD -->
+            <div id="admSectionPassword" class="hidden bg-white rounded-b-2xl p-6 shadow-sm border border-slate-200 max-w-md space-y-4">
+                <h3 class="font-bold text-slate-800 text-base">Ubah Kata Sandi Admin</h3>
+                <form onsubmit="changeAdminPassword(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Password Lama</label>
+                        <input type="password" id="oldPass" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Password Baru</label>
+                        <input type="password" id="newPass" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Konfirmasi Password Baru</label>
+                        <input type="password" id="confirmPass" required class="w-full p-2.5 border rounded-lg text-sm">
+                    </div>
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white font-bold px-5 py-2.5 rounded-xl text-sm transition">
+                        Perbarui Password
+                    </button>
+                </form>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="bg-slate-900 text-slate-400 py-4 text-center text-xs border-t border-slate-800 no-print mt-8">
+        <div class="max-w-7xl mx-auto px-4">
+            <p>&copy; 2026 MTsN 1 Kota Malang - Remedial IPA Kelas VII (Zat dan Perubahannya).</p>
+            <p class="text-slate-500 mt-1">Disusun oleh: Khuzaimatul Fitriyah, S.Si., M.Si.</p>
+        </div>
+    </footer>
+
+    <!-- MODAL ALERT MESSAGE (REPLACING BROWSER ALERT) -->
+    <div id="customModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-2xl max-w-sm w-full p-6 shadow-2xl border border-slate-100 text-center space-y-4 transform transition-all scale-100">
+            <div id="modalIconContainer" class="w-12 h-12 rounded-full mx-auto flex items-center justify-center text-xl bg-emerald-100 text-emerald-600">
+                <i id="modalIcon" class="fa-solid fa-circle-check"></i>
+            </div>
+            <h3 id="modalTitle" class="text-base font-bold text-slate-800">Pemberitahuan</h3>
+            <p id="modalMessage" class="text-xs md:text-sm text-slate-600 leading-relaxed"></p>
+            <div id="modalActions" class="flex justify-center space-x-2 pt-2">
+                <button onclick="closeModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-xl text-xs transition">
+                    Mengerti
+                </button>
+            </div>
+        </div>
+    </div>
+
+
+    <script>
+
+        // APP CONFIG STATE
+        let appConfig = {
+            title: "Remedial Asesmen Sumatif IPA Kelas VII",
+            school: "MTsN 1 Kota Malang",
+            teacher: "Khuzaimatul Fitriyah, S.Si., M.Si. (Guru IPA MTsN 1 Kota Malang)",
+            kkm: 84,
+            duration: 60, // minutes
+            icon: "fa-solid fa-flask-vial",
+            adminPass: "admin123"
+        };
+
+        // USER / EXAM STATE
+        let currentUser = null; // { name, class, presensi, isAdmin, isTryout }
+        let currentQuestionIndex = 0;
+        let userAnswers = {}; // qId -> answer payload
+        let flaggedQuestions = {}; // qId -> boolean
+        let timerInterval = null;
+        let timeRemaining = 3600; // seconds
+
+        // 40 HOTS CONTEXTUAL QUESTIONS BASED ON CHAPTER II "ZAT DAN PERUBAHANNYA"
+        let defaultQuestions = [
+            // --- SECTION A: PILIHAN GANDA (20 SOAL) ---
+            {
+                id: 1,
+                type: "pg",
+                question: "Seorang siswa memasukkan 50 mL air ke dalam gelas ukur berbentuk silinder, kemudian memindahkannya ke dalam botol berbentuk kerucut. Hasil pengamatan menunjukkan bahwa bentuk air berubah mengikuti botol, tetapi volumenya tetap 50 mL. Berdasarkan model partikel, alasan paling tepat yang menjelaskan fenomena ini adalah...",
+                options: [
+                    "A. Partikel zat cair letaknya sangat berjauhan sehingga volumenya selalu berubah",
+                    "B. Partikel zat cair dapat bergerak relatif bebas meninggalkan kelompoknya",
+                    "C. Gaya tarik antarpartikel zat cair agak lemah dan jarak antarpartikel agak renggang sehingga bentuknya fleksibel namun volume tetap",
+                    "D. Partikel zat cair tidak memiliki gaya tarik sama sekali sehingga dapat dimampatkan dengan mudah"
+                ],
+                answer: "C",
+                scoreWeight: 2,
+                explanation: "Zat cair memiliki jarak antarpartikel yang agak renggang dan gaya tarik antarpartikel lebih lemah dibanding zat padat. Hal ini membuat bentuknya mengikuti wadah, namun volumenya tetap karena kerapatan relatif tinggi dibanding gas."
+            },
+            {
+                id: 2,
+                type: "pg",
+                question: "Saat pembelajaran di laboratorium IPA MTsN 1 Kota Malang, seorang siswa meneteskan sebotol tinta biru ke dalam gelas kimia berisi air jernih tanpa diaduk. Setelah beberapa menit, seluruh air berubah warna menjadi biru secara merata. Proses peristiwa tersebut dinamakan difusi. Faktor utama yang menyebabkan peristiwa difusi ini dapat terjadi adalah...",
+                options: [
+                    "A. Perubahan bentuk wujud zat secara spontan dari cair menjadi padat",
+                    "B. Pergerakan konstan dan acak dari partikel-partikel zat dari daerah berkonsentrasi tinggi ke konsentrasi rendah",
+                    "C. Reaksi kimia antara zat pewarna tinta dengan molekul air yang menghasilkan zat baru",
+                    "D. Pengaruh gaya gravitasi bumi yang menarik molekul tinta ke dasar gelas secara perlahan"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Difusi terjadi karena gerakan acak partikel (gerak Brown/kinetik) dari konsentrasi tinggi ke rendah hingga mencapai kesetimbangan."
+            },
+            {
+                id: 3,
+                type: "pg",
+                question: "Seekor anjing pelacak kepolisian (K-9) mampu menemukan barang bukti tersembunyi hanya melalui bau aroma zat cair yang menguap. Jika dianalisis dari susunan dan gerak partikel gas hasil penguapan tersebut, mengapa bau tersebut dapat menyebar sangat cepat di udara terbuka?",
+                options: [
+                    "A. Partikel gas bergerak sangat lambat sehingga terkumpul di satu tempat",
+                    "B. Jarak antarpartikel gas sangat jauh dan gaya tariknya sangat lemah sehingga partikel bergerak acak dengan sangat cepat ke segala arah",
+                    "C. Partikel gas terikat sangat kuat satu sama lain sehingga dorongan angin membawanya",
+                    "D. Partikel gas memiliki bentuk dan volume yang konstan di udara"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Partikel gas memiliki gaya tarik antarpartikel yang sangat lemah dan jarak yang berjauhan, memungkinkannya bergerak bebas dan cepat menyebar melalui difusi di udara."
+            },
+            {
+                id: 4,
+                type: "pg",
+                question: "Ibu guru menaruh kapur barus (kamfer) berwarna putih di dalam lemari pakaian sekolah. Setelah satu bulan, kapur barus tersebut mengecil dan akhirnya habis, namun pakaian di dalam lemari menjadi sangat harum. Perubahan wujud zat yang terjadi pada kapur barus tersebut adalah...",
+                options: [
+                    "A. Menguap, yaitu perubahan wujud dari cair menjadi gas",
+                    "B. Menyublim, yaitu perubahan wujud langsung dari padat menjadi gas",
+                    "C. Mengkristal, yaitu perubahan wujud dari gas menjadi padat",
+                    "D. Meleleh, yaitu perubahan wujud dari padat menjadi cair"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Menyublim adalah perubahan wujud zat dari padat langsung menjadi gas tanpa melalui fase cair terlebih dahulu."
+            },
+            {
+                id: 5,
+                type: "pg",
+                question: "Panggung pertunjukan seni drama di MTsN 1 Kota Malang menggunakan efek kabut tebal bergumpal di lantai panggung dengan cara memasukkan es kering (dry ice / karbondioksida padat) ke dalam air hangat. Kabut tebal putih yang tampak melayang rendah tersebut sebenarnya merupakan...",
+                options: [
+                    "A. Gas karbondioksida murni yang berwarna putih",
+                    "B. Uap air yang mengembun menjadi tetesan air sangat kecil akibat pendinginan oleh gas CO2 hasil sublimasi es kering",
+                    "C. Partikel es kering yang mencair lalu mendidih menjadi uap panas",
+                    "D. Reaksi kimia pembakaran es kering yang menghasilkan asap beracun"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Es kering menyublim menjadi gas CO2 yang sangat dingin. Cold gas ini membekukan/mengembunkan uap air di udara sekitar menjadi titik-titik air halus yang membentuk kabut tebal."
+            },
+            {
+                id: 6,
+                type: "pg",
+                question: "Perhatikan tabel titik leleh dan titik didih beberapa zat berikut pada tekanan normal:\n- Zat P: Titik Leleh = -114°C, Titik Didih = 78°C\n- Zat Q: Titik Leleh = 0°C, Titik Didih = 100°C\n- Zat R: Titik Leleh = 1083°C, Titik Didih = 2567°C\n\nPada suhu kamar (25°C), wujud dari zat P, Q, dan R secara berurutan adalah...",
+                options: [
+                    "A. P: Cair, Q: Cair, R: Padat",
+                    "B. P: Gas, Q: Cair, R: Padat",
+                    "C. P: Cair, Q: Padat, R: Cair",
+                    "D. P: Padat, Q: Cair, R: Gas"
+                ],
+                answer: "A",
+                scoreWeight: 2,
+                explanation: "Pada suhu 25°C: Zat P telah melewati titik lelehnya (-114°C) namun belum mencapai titik didih (78°C) -> Cair. Zat Q (0°C s.d 100°C) -> Cair. Zat R (suhu 25°C jauh di bawah 1083°C) -> Padat."
+            },
+            {
+                id: 7,
+                type: "pg",
+                question: "Seorang siswa melakukan eksperimen memanaskan segumpal es batu dari suhu -5°C hingga mendidih pada suhu 100°C. Selama proses perubahan wujud es mencair menjadi air pada suhu konstan 0°C, energi kalor yang terus diserap oleh sistem digunakan untuk...",
+                options: [
+                    "A. Meningkatkan suhu air secara drastis",
+                    "B. Memutuskan gaya tarik antarpartikel es agar ikatan padat merenggang menjadi zat cair",
+                    "C. Mengubah massa partikel es menjadi lebih ringan",
+                    "D. Memusnahkan sebagian partikel es menjadi energi panas"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Saat terjadi perubahan wujud zat (seperti meleleh pada 0°C), suhu zat tetap konstan karena kalor laten digunakan untuk melemahkan/memutuskan ikatan antarpartikel, bukan menaikkan suhu."
+            },
+            {
+                id: 8,
+                type: "pg",
+                question: "Ibu memotong buah apel menjadi beberapa bagian lalu membiarkannya terbuka di atas meja makan. Setelah 1 jam, permukaan apel berubah warna menjadi cokelat (browning). Peristiwa ini tergolong ke dalam perubahan kimia karena...",
+                options: [
+                    "A. Hanya terjadi perubahan wujud dari padat menjadi cair",
+                    "B. Apel mengalami penyusutan volume secara signifikan",
+                    "C. Terjadi reaksi enzimatis antara senyawa pada apel dengan oksigen udara yang menghasilkan zat baru berwarna cokelat",
+                    "D. Buah apel menyerap cahaya di dalam ruangan"
+                ],
+                answer: "C",
+                scoreWeight: 2,
+                explanation: "Perubahan kimia ditandai dengan terbentuknya zat baru. Pencokelatan apel terjadi akibat reaksi oksidasi enzimatis antara asam fenolat pada apel dan oksigen."
+            },
+            {
+                id: 9,
+                type: "pg",
+                question: "Di bawah ini tercantum beberapa peristiwa dalam kehidupan sehari-hari:\n(1) Beras ditumbuk menjadi tepung beras\n(2) Singkong difermentasi menjadi tape\n(3) Lilin meleleh saat dipanaskan\n(4) Besi pagar rumah berkarat karena air hujan\nPeristiwa yang termasuk perubahan fisika ditunjukkan oleh nomor...",
+                options: [
+                    "A. (1) dan (3)",
+                    "B. (1) dan (2)",
+                    "C. (2) dan (4)",
+                    "D. (3) dan (4)"
+                ],
+                answer: "A",
+                scoreWeight: 2,
+                explanation: "Tepung beras dan lilin meleleh tidak menghasilkan zat jenis baru (hanya bentuk/wujud berubah = perubahan fisika). Fermentasi tape dan besi berkarat menghasilkan zat baru (= perubahan kimia)."
+            },
+            {
+                id: 10,
+                type: "pg",
+                question: "Seorang peneliti memasukkan serbuk seng ke dalam larutan asam klorida di dalam tabung reaksi. Gelembung-gelembung gas keluar dengan cepat dan dasar tabung reaksi terasa sangat panas. Ciri utama yang membuktikan telah terjadi perubahan kimia pada percobaan tersebut adalah...",
+                options: [
+                    "A. Perubahan wujud sementara dan perubahan ukuran",
+                    "B. Terbentuknya gas baru dan perubahan suhu (pelepasan energi panas)",
+                    "C. Pelarutan serbuk seng tanpa menghasilkan zat baru",
+                    "D. Perubahan wujud dari cair menjadi padat"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Ciri-ciri reaksi/perubahan kimia meliputi: terbentuknya gas (gelembung), perubahan suhu (eksoterm/endoterm), terbentuknya endapan, atau perubahan warna."
+            },
+            {
+                id: 11,
+                type: "pg",
+                question: "Dua buah balok, Balok A dan Balok B, terbuat dari bahan kayu yang sama persis. Balok A memiliki volume 100 cm³ dan massa 80 gram. Jika Balok B memiliki volume 250 cm³, berapa massa dari Balok B tersebut?",
+                options: [
+                    "A. 150 gram",
+                    "B. 200 gram",
+                    "C. 250 gram",
+                    "D. 320 gram"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Massa jenis bahan kayu sama: ρ = m/V = 80g / 100cm³ = 0,8 g/cm³. Untuk Balok B: m = ρ x V = 0,8 g/cm³ x 250 cm³ = 200 gram."
+            },
+            {
+                id: 12,
+                type: "pg",
+                question: "Seorang siswa mengukur massa sebuah batu tidak beraturan menggunakan neraca sebesar 120 gram. Kemudian ia memasukkan batu tersebut ke dalam gelas ukur berisi air 50 mL, sehingga tinggi permukaan air naik menjadi 80 mL. Massa jenis batu tersebut adalah...",
+                options: [
+                    "A. 1,5 g/cm³",
+                    "B. 2,4 g/cm³",
+                    "C. 4,0 g/cm³",
+                    "D. 6,0 g/cm³"
+                ],
+                answer: "C",
+                scoreWeight: 2,
+                explanation: "Volume batu = V2 - V1 = 80 mL - 50 mL = 30 mL (cm³). Massa jenis ρ = m / V = 120 gram / 30 cm³ = 4,0 g/cm³."
+            },
+            {
+                id: 13,
+                type: "pg",
+                question: "Mengapa kapal laut berukuran raksasa yang terbuat dari bahan besi/baja yang sangat berat dapat terapung di permukaan air laut, sedangkan sebuah paku besi kecil justru langsung tenggelam ke dasar air?",
+                options: [
+                    "A. Besi paku mengandung gaya gravitasi yang lebih besar dibanding kapal laut",
+                    "B. Kapal laut dirancang memiliki rongga udara sangat besar sehingga volume totalnya besar, membuat massa jenis rata-rata kapal lebih kecil dari massa jenis air laut",
+                    "C. Kapal laut didorong oleh mesin bertenaga tinggi sehingga tidak bisa tenggelam",
+                    "D. Air laut mengandung garam yang hanya mampu menahan benda berukuran besar"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Prinsip kerapatan (massa jenis): Rongga udara di dalam kapal membuat volume keseluruhan bertambah sangat besar tanpa menambah banyak massa, sehingga massa jenis total kapal < massa jenis air laut."
+            },
+            {
+                id: 14,
+                type: "pg",
+                question: "Laut Mati di Timur Tengah memiliki kadar garam yang sangat tinggi melebihi laut biasa. Fenomena unik yang terjadi saat orang berenang di Laut Mati adalah orang tersebut dapat mengapung dengan sangat mudah tanpa tenggelam. Hal ini terjadi karena...",
+                options: [
+                    "A. Massa jenis air Laut Mati jauh lebih tinggi dibanding massa jenis tubuh manusia",
+                    "B. Air Laut Mati memiliki gaya gravitasi yang sangat kecil",
+                    "C. Suhu air Laut Mati yang sangat dingin menahan tubuh orang",
+                    "D. Tubuh manusia mengalami perubahan wujud saat masuk ke Laut Mati"
+                ],
+                answer: "A",
+                scoreWeight: 2,
+                explanation: "Kandungan garam yang sangat tinggi meningkatkan kerapatan/massa jenis air Laut Mati sehingga melebihi massa jenis rata-rata tubuh manusia, membuat manusia mudah terapung."
+            },
+            {
+                id: 15,
+                type: "pg",
+                question: "Balon udara wahana wisata atau balon pesta berisikan gas helium dapat terbang melambung tinggi ke angkasa di atmosfer, sedangkan balon yang kita tiup dengan mulut biasa selalu jatuh ke lantai. Penyebab utama hal tersebut adalah...",
+                options: [
+                    "A. Gas helium tidak memiliki massa sama sekali di bumi",
+                    "B. Massa jenis gas helium lebih kecil daripada massa jenis udara di sekitarnya",
+                    "C. Udara dari tiupan mulut mengandung air cair yang berat",
+                    "D. Gas helium menarik partikel awan di langit"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Benda dengan massa jenis lebih kecil dari fluida (udara sekitar) akan mengalami gaya apung ke atas sehingga balon berisi helium melayang naik."
+            },
+            {
+                id: 16,
+                type: "pg",
+                question: "Di daerah beriklim dingin, danau akan membeku pada musim dingin. Uniknya, lapisan es hanya terbentuk di permukaan danau, sementara air di dasar danau tetap berwujud cair sehingga ikan tetap bertahan hidup. Karakteristik anomali air yang menjelaskan hal ini adalah...",
+                options: [
+                    "A. Es memiliki massa jenis yang lebih kecil daripada air cair pada suhu 4°C sehingga es mengapung di permukaan",
+                    "B. Es memiliki massa jenis lebih besar sehingga tenggelam ke dasar",
+                    "C. Ikan memancarkan kalor yang mencairkan es di dasar danau",
+                    "D. Dasar danau tidak terjangkau oleh molekul air"
+                ],
+                answer: "A",
+                scoreWeight: 2,
+                explanation: "Air mencapai kerapatan maksimum pada 4°C. Saat membeku menjadi es (0°C), volumenya membesar dan massa jenis es lebih kecil dari air cair, sehingga es mengapung di atas dan mengisolasi air di bawahnya."
+            },
+            {
+                id: 17,
+                type: "pg",
+                question: "Seorang juru masak memanaskan mentega di atas wajan yang panas. Mentega padat perlahan meleleh menjadi cairan. Jika dilihat dari perubahan kecepatan partikel dan suhunya saat dipanaskan, pernyataan yang benar adalah...",
+                options: [
+                    "A. Kecepatan gerakan partikel berkurang dan energi kinetiknya menurun",
+                    "B. Kecepatan gerakan partikel meningkat karena menyerap energi kalor sehingga partikel dapat melepaskan diri dari struktur padatnya",
+                    "C. Jarak antarpartikel semakin rapat dan kaku",
+                    "D. Partikel mentega berubah menjadi molekul air"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Pemanasan memberikan energi kalor yang meningkatkan energi kinetik partikel. Partikel bergetar dan bergerak lebih cepat hingga mengatasi gaya tarik antarpartikel, mengubah wujud padat menjadi cair."
+            },
+            {
+                id: 18,
+                type: "pg",
+                question: "Proses pembuatan garam dapur secara tradisional oleh petani garam di daerah pantai memanfaatkan sinar matahari untuk memisahkan air laut dari kristal garam. Proses perubahan wujud zat yang dimanfaatkan dalam pembuatan garam tersebut adalah...",
+                options: [
+                    "A. Pengembunan air laut",
+                    "B. Penguapan (evaporasi) air laut meninggalkan kristal garam padat",
+                    "C. Sublimasi garam laut",
+                    "D. Pembekuan air laut"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Air laut ditampung di tambak garam. Panas matahari menguapkan air (mengubah air cair menjadi uap gas), sehingga tersisa endapan kristal garam padat."
+            },
+            {
+                id: 19,
+                type: "pg",
+                question: "Di laboratorium IPA, terdapat 4 jenis cairan berbeda dalam tabung terpisah:\n- Cairan 1: Minyak goreng (ρ = 0,8 g/cm³)\n- Cairan 2: Air murni (ρ = 1,0 g/cm³)\n- Cairan 3: Sirup pekat (ρ = 1,3 g/cm³)\n- Cairan 4: Raksa (ρ = 13,6 g/cm³)\n\nJika keempat cairan yang tidak saling bercampur tersebut dituangkan ke dalam satu gelas silinder yang sama, urutan lapisan cairan dari posisi paling bawah ke paling atas adalah...",
+                options: [
+                    "A. Minyak - Air - Sirup - Raksa",
+                    "B. Raksa - Sirup - Air - Minyak",
+                    "C. Sirup - Raksa - Minyak - Air",
+                    "D. Air - Minyak - Raksa - Sirup"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Cairan dengan massa jenis terbawah/paling besar berada di paling dasar: Raksa (13,6) -> Sirup (1,3) -> Air (1,0) -> Minyak (0,8) di paling atas."
+            },
+            {
+                id: 20,
+                type: "pg",
+                question: "Anak-anak membuat es puter tradisional menggunakan kaleng berisi adonan susu yang diputar di dalam wadah berisi bongkahan es batu dan garam dapur kasar. Fungsi penambahan garam dapur pada es batu tersebut adalah...",
+                options: [
+                    "A. Memberikan rasa asin pada es puter",
+                    "B. Menurunkan titik beku es sehingga adonan susu di dalam kaleng dapat dengan cepat membeku",
+                    "C. Menaikkan suhu es batu agar cepat mencair",
+                    "D. Menghentikan proses pembekuan susu"
+                ],
+                answer: "B",
+                scoreWeight: 2,
+                explanation: "Garam berfungsi sebagai zat terlarut yang menurunkan titik beku air/es di luar kaleng hingga di bawah 0°C (sifat koligatif), menarik kalor dari adonan susu sehingga susu cepat membeku."
+            },
+
+            // --- SECTION B: PILIHAN GANDA KOMPLEKS (5 SOAL - PILIH LEBIH DARI 1) ---
+            {
+                id: 21,
+                type: "pg_kompleks",
+                question: "Pilihlah BEBERAPA pernyataan berikut yang benar mengenai karakteristik dan sifat partikel pada wujud ZAT PADAT! (Jawaban benar lebih dari satu)",
+                options: [
+                    "A. Memiliki bentuk dan volume yang konstan (tetap)",
+                    "B. Jarak antarpartikelnya sangat rapat dan teratur",
+                    "C. Gaya tarik-menarik antarpartikel sangat kuat",
+                    "D. Sangat mudah dimampatkan (kompresibilitas tinggi)",
+                    "E. Partikelnya dapat bergerak bebas meninggalkan kelompoknya"
+                ],
+                correctAnswers: ["A", "B", "C"],
+                scoreWeight: 4,
+                explanation: "Zat padat memiliki bentuk & volume tetap, susunan rapat teratur, gaya tarik kuat. Zat padat sangat sulit dimampatkan dan partikelnya hanya bergetar di tempat."
+            },
+            {
+                id: 22,
+                type: "pg_kompleks",
+                question: "Manakah di antara peristiwa berikut yang tergolong sebagai PERUBAHAN KIMIA? (Pilih semua jawaban yang benar)",
+                options: [
+                    "A. Menyalakan korek api kayu hingga menjadi arang",
+                    "B. Mendidihkan air hingga menjadi uap air",
+                    "C. Pembuatan adonan kue yang dipanggang menjadi roti mekar",
+                    "D. Melarutkan dua sendok gula ke dalam teh hangat",
+                    "E. Pembusukan sampah organik kompost"
+                ],
+                correctAnswers: ["A", "C", "E"],
+                scoreWeight: 4,
+                explanation: "Perubahan kimia menghasilkan zat baru: kayu terbakar jadi arang (A), memanggang roti (C), dan pembusukan kompost (E). Air mendidih dan gula larut adalah perubahan fisika."
+            },
+            {
+                id: 23,
+                type: "pg_kompleks",
+                question: "Perubahan wujud zat yang tergolong proses MELEPAS KALOR (eksoterm) ke lingkungan sekitar adalah... (Pilih semua yang benar)",
+                options: [
+                    "A. Membeku (cair -> padat)",
+                    "B. Mencair (padat -> cair)",
+                    "C. Mengembun (gas -> cair)",
+                    "D. Menguap (cair -> gas)",
+                    "E. Mengkristal / Deposisi (gas -> padat)"
+                ],
+                correctAnswers: ["A", "C", "E"],
+                scoreWeight: 4,
+                explanation: "Proses melepas kalor terjadi saat ikatan partikel makin rapat: Membeku (A), Mengembun (C), dan Mengkristal/Deposisi (E). Mencair dan Menguap memerlukan/menyerap kalor."
+            },
+            {
+                id: 24,
+                type: "pg_kompleks",
+                question: "Pernyataan berikut berkaitan dengan konsep Kerapatan Zat (Massa Jenis). Manakah pernyataan yang BENAR? (Pilih lebih dari satu)",
+                options: [
+                    "A. Massa jenis tidak tergantung pada jumlah/ukuran benda, melainkan jenis materinya",
+                    "B. Benda akan tenggelam jika massa jenis benda lebih kecil dari massa jenis cairan",
+                    "C. Satuan Standar Internasional (SI) untuk massa jenis adalah kg/m³",
+                    "D. Minyak goreng mengapung di atas air karena massa jenis minyak lebih kecil daripada air",
+                    "E. Alat untuk mengukur volume benda tidak beraturan adalah neraca Ohaus"
+                ],
+                correctAnswers: ["A", "C", "D"],
+                scoreWeight: 4,
+                explanation: "Massa jenis adalah sifat intensif (A), satuan SI kg/m³ (C), minyak terapung karena ρ minyak < ρ air (D). Benda tenggelam jika ρ benda > ρ cair; volume benda diukur gelas ukur."
+            },
+            {
+                id: 25,
+                type: "pg_kompleks",
+                question: "Berikut adalah ciri-ciri yang mengindikasikan telah terjadinya suatu REAKSI / PERUBAHAN KIMIA pada suatu materi: (Pilih semua yang benar)",
+                options: [
+                    "A. Perubahan bentuk dan ukuran tanpa perubahan zat",
+                    "B. Terbentuknya zat baru dengan sifat yang berbeda dari zat asal",
+                    "C. Terbentuknya endapan padat di dasar larutan",
+                    "D. Terjadi perubahan warna zat yang bersifat permanen",
+                    "E. Terbentuknya gelembung gas baru"
+                ],
+                correctAnswers: ["B", "C", "D", "E"],
+                scoreWeight: 4,
+                explanation: "Ciri-ciri perubahan kimia: terbentuk zat baru (B), terbentuk endapan (C), perubahan warna permanen (D), dan pembentukan gelembung gas (E)."
+            },
+
+            // --- SECTION C: MENJODOHKAN (10 SOAL) ---
+            {
+                id: 26,
+                type: "match",
+                question: "Pasangkan istilah atau peristiwa di Kolom Kiri dengan konsep wujud/perubahan zat yang tepat di Kolom Kanan!",
+                leftText: "Peristiwa titik-titik air yang menempel di luar dinding gelas berisi es batu dingin.",
+                matchOptions: ["Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Massa Jenis", "Difusi", "Mencair", "Deposisi", "Kompresibilitas", "Eksoterm"],
+                answer: "Mengembun",
+                scoreWeight: 2,
+                explanation: "Uap air di udara sekitar gelas mendingin saat menyentuh permukaan gelas es dan mengembun menjadi titik air."
+            },
+            {
+                id: 27,
+                type: "match",
+                question: "Pasangkan pernyataan berikut dengan istilah fisika yang sesuai:",
+                leftText: "Peristiwa pembuatan es kering (dry ice) langsung dari gas karbondioksida.",
+                matchOptions: ["Deposisi", "Mengembun", "Menyublim", "Perubahan Kimia", "Mencair", "Difusi", "Kompresibilitas", "Eksoterm", "Perubahan Fisika", "Massa Jenis"],
+                answer: "Deposisi",
+                scoreWeight: 2,
+                explanation: "Deposisi/Mengkristal adalah perubahan wujud dari gas langsung menjadi padat."
+            },
+            {
+                id: 28,
+                type: "match",
+                question: "Pasangkan peristiwa berikut dengan kelompok jenis perubahannya:",
+                leftText: "Proses beras ditumbuk halus hingga menjadi tepung beras halus.",
+                matchOptions: ["Perubahan Fisika", "Perubahan Kimia", "Mengembun", "Menyublim", "Massa Jenis", "Difusi", "Mencair", "Deposisi", "Kompresibilitas", "Eksoterm"],
+                answer: "Perubahan Fisika",
+                scoreWeight: 2,
+                explanation: "Beras ditumbuk hanya berubah ukuran partikelnya (fisik), zat penyusunnya tetap beras."
+            },
+            {
+                id: 29,
+                type: "match",
+                question: "Pasangkan peristiwa berikut dengan kelompok jenis perubahannya:",
+                leftText: "Pagar besi rumah yang berkarat akibat sering terkena hujan dan udara lembap.",
+                matchOptions: ["Perubahan Kimia", "Perubahan Fisika", "Mengembun", "Menyublim", "Massa Jenis", "Difusi", "Mencair", "Deposisi", "Kompresibilitas", "Eksoterm"],
+                answer: "Perubahan Kimia",
+                scoreWeight: 2,
+                explanation: "Besi berkarat menghasilkan zat baru berupa besi(III) oksida (karat)."
+            },
+            {
+                id: 30,
+                type: "match",
+                question: "Pasangkan istilah berikut dengan definisi yang tepat:",
+                leftText: "Kemampuan suatu zat cair atau gas untuk ditekan sehingga volumenya berkurang.",
+                matchOptions: ["Kompresibilitas", "Massa Jenis", "Difusi", "Deposisi", "Eksoterm", "Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Mencair"],
+                answer: "Kompresibilitas",
+                scoreWeight: 2,
+                explanation: "Kompresibilitas adalah tingkat kemudahan suatu zat untuk dimampatkan/ditekan."
+            },
+            {
+                id: 31,
+                type: "match",
+                question: "Pasangkan istilah berikut dengan definisi yang tepat:",
+                leftText: "Rasio perbandingan antara massa zat dengan volume zat tersebut (ρ = m/V).",
+                matchOptions: ["Massa Jenis", "Kompresibilitas", "Difusi", "Deposisi", "Eksoterm", "Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Mencair"],
+                answer: "Massa Jenis",
+                scoreWeight: 2,
+                explanation: "Massa jenis (densitas) diukur dari massa per satuan volume."
+            },
+            {
+                id: 32,
+                type: "match",
+                question: "Pasangkan peristiwa berikut dengan fenomena perpindahan partikel:",
+                leftText: "Aroma parfum gurumu yang tercium dari jarak beberapa meter di dalam ruang kelas.",
+                matchOptions: ["Difusi", "Massa Jenis", "Kompresibilitas", "Deposisi", "Eksoterm", "Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Mencair"],
+                answer: "Difusi",
+                scoreWeight: 2,
+                explanation: "Penyebaran partikel gas parfum di udara merupakan contoh peristiwa difusi gas."
+            },
+            {
+                id: 33,
+                type: "match",
+                question: "Pasangkan jenis perubahan wujud zat berikut:",
+                leftText: "Proses perubahan wujud dari zat padat menjadi zat cair akibat pemanasan.",
+                matchOptions: ["Mencair", "Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Massa Jenis", "Difusi", "Deposisi", "Kompresibilitas", "Eksoterm"],
+                answer: "Mencair",
+                scoreWeight: 2,
+                explanation: "Mencair/meleleh adalah perubahan wujud dari padat menjadi cair."
+            },
+            {
+                id: 34,
+                type: "match",
+                question: "Pasangkan istilah termokimia berikut:",
+                leftText: "Reaksi atau perubahan wujud zat yang membebaskan/melepaskan energi panas ke lingkungan.",
+                matchOptions: ["Eksoterm", "Mencair", "Mengembun", "Menyublim", "Perubahan Kimia", "Perubahan Fisika", "Massa Jenis", "Difusi", "Deposisi", "Kompresibilitas"],
+                answer: "Eksoterm",
+                scoreWeight: 2,
+                explanation: "Reaksi eksoterm adalah reaksi yang melepas energi panas."
+            },
+            {
+                id: 35,
+                type: "match",
+                question: "Pasangkan perubahan wujud zat berikut:",
+                leftText: "Perubahan wujud zat dari padat langsung menjadi gas tanpa melalui fase cair.",
+                matchOptions: ["Menyublim", "Mencair", "Mengembun", "Perubahan Kimia", "Perubahan Fisika", "Massa Jenis", "Difusi", "Deposisi", "Kompresibilitas", "Eksoterm"],
+                answer: "Menyublim",
+                scoreWeight: 2,
+                explanation: "Menyublim adalah perubahan langsung dari fase padat ke fase gas."
+            },
+
+            // --- SECTION D: ISIAN SINGKAT (5 SOAL) ---
+            {
+                id: 36,
+                type: "short",
+                question: "Tuliskan nama alat laboratorium yang digunakan khusus untuk mengukur volume benda padat berbentuk tidak beraturan (seperti batu koral) dengan bantuan zat cair!",
+                answerKeywords: ["gelas ukur", "gelas pancuran", "gelas berpancur"],
+                scoreWeight: 4,
+                explanation: "Alat laboratorium standar untuk mengukur volume benda tidak beraturan adalah gelas ukur (pindah volume air) atau gelas berpancuran."
+            },
+            {
+                id: 37,
+                type: "short",
+                question: "Sebuah kubus kuningan memiliki massa 340 gram dan volume 40 cm³. Berapakah besarnya massa jenis kubus kuningan tersebut dalam satuan g/cm³? (Tuliskan angkanya saja)",
+                answerKeywords: ["8.5", "8,5", "8.5 g/cm3"],
+                scoreWeight: 4,
+                explanation: "ρ = m / V = 340 g / 40 cm³ = 8,5 g/cm³."
+            },
+            {
+                id: 38,
+                type: "short",
+                question: "Apakah nama fenomena gerak acak dan terus-menerus dari partikel-partikel mikroskopis dalam zat cair atau gas yang menyebabkan terjadinya proses difusi?",
+                answerKeywords: ["gerak brown", "brown", "gerakan brown"],
+                scoreWeight: 4,
+                explanation: "Gerak acak konstan partikel fluida dinamakan Gerak Brown."
+            },
+            {
+                id: 39,
+                type: "short",
+                question: "Sebutkan nama proses perubahan wujud zat dari gas langsung menjadi zat padat!",
+                answerKeywords: ["deposisi", "mengkristal", "kristalisasi"],
+                scoreWeight: 4,
+                explanation: "Perubahan gas langsung menjadi padat dinamakan deposisi atau mengkristal."
+            },
+            {
+                id: 40,
+                type: "short",
+                question: "Jika massa jenis suatu benda lebih BESAR daripada massa jenis zat cair tempat benda diletakkan, maka posisi benda tersebut di dalam zat cair akan...",
+                answerKeywords: ["tenggelam", "tenggelam ke dasar"],
+                scoreWeight: 4,
+                explanation: "Jika ρ benda > ρ cair, gaya berat benda lebih besar dari gaya apung maksimum, sehingga benda akan tenggelam."
+            }
+        ];
+
+        // Working copy of questions (editable in admin)
+        let activeQuestions = JSON.parse(JSON.stringify(defaultQuestions));
+
+
+        window.onload = function() {
+            // Load saved settings if any
+            loadStoredData();
+            updateUIFromConfig();
+            renderQuestionPalette();
+        };
+
+        function loadStoredData() {
+            try {
+                const savedCfg = localStorage.getItem('mtsn1_remedial_cfg');
+                if (savedCfg) appConfig = JSON.parse(savedCfg);
+
+                const savedQs = localStorage.getItem('mtsn1_remedial_qs');
+                if (savedQs) activeQuestions = JSON.parse(savedQs);
+            } catch(e) {
+                console.log("Using default config and question set.");
+            }
+        }
+
+        function saveConfigToStorage() {
+            localStorage.setItem('mtsn1_remedial_cfg', JSON.stringify(appConfig));
+        }
+
+        function saveQuestionsToStorage() {
+            localStorage.setItem('mtsn1_remedial_qs', JSON.stringify(activeQuestions));
+        }
+
+        function updateUIFromConfig() {
+            document.getElementById('appTitleText').innerText = appConfig.title;
+            document.getElementById('appSchoolText').innerText = appConfig.school;
+            document.getElementById('appTeacherText').innerText = "Disusun oleh: " + appConfig.teacher;
+            
+            // Update icons if custom
+            const iconEl = document.getElementById('headerIcon');
+            if(iconEl && appConfig.icon) {
+                iconEl.className = appConfig.icon + " text-amber-300 text-2xl";
+            }
+
+            const kkmDisplays = document.querySelectorAll('.kkmValueDisplay');
+            kkmDisplays.forEach(el => el.innerText = appConfig.kkm);
+        }
+
+
+        function switchAuthTab(type) {
+            const stdTab = document.getElementById('tabStudentBtn');
+            const admTab = document.getElementById('tabAdminBtn');
+            const stdForm = document.getElementById('studentLoginForm');
+            const admForm = document.getElementById('adminLoginForm');
+
+            if (type === 'student') {
+                stdTab.className = "flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-emerald-600 text-emerald-700 bg-white";
+                admTab.className = "flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+                stdForm.classList.remove('hidden');
+                admForm.classList.add('hidden');
+            } else {
+                admTab.className = "flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-amber-600 text-amber-700 bg-white";
+                stdTab.className = "flex-1 py-3.5 px-4 font-semibold text-sm transition-all duration-200 border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+                admForm.classList.remove('hidden');
+                stdForm.classList.add('hidden');
+            }
+        }
+
+        // Student Login
+        function handleStudentLogin(e) {
+            e.preventDefault();
+            const name = document.getElementById('stdName').value.trim();
+            const sClass = document.getElementById('stdClass').value;
+            const presensi = document.getElementById('stdPresensi').value.trim();
+
+            if (!name || !sClass || !presensi) {
+                showModal("Peringatan", "Harap lengkapi semua bidang identitas!", "exclamation");
+                return;
+            }
+
+            // Check 1-time limit rule for students
+            const userKey = `mtsn1_attempt_${sClass}_${presensi}`;
+            if (localStorage.getItem(userKey)) {
+                showModal("Akses Ditolak", `Siswa dengan Nama: ${name}, Kelas ${sClass}, No. Presensi ${presensi} SUDAH PERNAH mengerjakan ujian remedial ini. Kesempatan siswa dibatasi 1 kali pengerjaan. Silakan hubungi Guru/Admin jika membutuhkan reset.`, "shield-halved");
+                return;
+            }
+
+            currentUser = {
+                name: name,
+                class: sClass,
+                presensi: presensi,
+                isAdmin: false,
+                isTryout: false
+            };
+
+            startExamSession();
+        }
+
+        // Admin Login
+        function handleAdminLogin(e) {
+            e.preventDefault();
+            const u = document.getElementById('adminUser').value.trim();
+            const p = document.getElementById('adminPass').value.trim();
+
+            if (u === 'admin' && p === appConfig.adminPass) {
+                showModal("Sukses Login", "Selamat datang, Guru IPA / Admin!", "circle-check");
+                openAdminDashboard();
+            } else {
+                showModal("Login Gagal", "Username atau Password admin tidak valid!", "triangle-exclamation");
+            }
+        }
+
+
+        function startExamSession() {
+            // Hide auth, show exam
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('resultView').classList.add('hidden');
+            document.getElementById('examView').classList.remove('hidden');
+
+            document.getElementById('examStudentInfo').innerText = `${currentUser.name} (${currentUser.class} / Presensi: ${currentUser.presensi}) ${currentUser.isTryout ? '[MODU UJI COBA GURU]' : ''}`;
+
+            // Reset exam state
+            userAnswers = {};
+            flaggedQuestions = {};
+            currentQuestionIndex = 0;
+            timeRemaining = appConfig.duration * 60;
+
+            renderQuestionPalette();
+            loadQuestion(0);
+
+            // Timer Loop
+            if (timerInterval) clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+                updateTimerDisplay();
+                if (timeRemaining <= 0) {
+                    clearInterval(timerInterval);
+                    showModal("Waktu Habis", "Waktu ujian 60 menit telah habis. Jawaban Anda akan otomatis dikumpulkan.", "clock");
+                    submitExam();
+                }
+            }, 1000);
+        }
+
+        function updateTimerDisplay() {
+            const m = Math.floor(timeRemaining / 60);
+            const s = timeRemaining % 60;
+            document.getElementById('timerDisplay').innerText = `${m < 10 ? '0'+m : m}:${s < 10 ? '0'+s : s}`;
+        }
+
+        function renderQuestionPalette() {
+            const grid = document.getElementById('questionGrid');
+            grid.innerHTML = '';
+
+            let answeredCount = 0;
+
+            activeQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.type = 'button';
+                btn.innerText = idx + 1;
+
+                const isAnswered = isQuestionAnswered(q.id);
+                const isFlagged = flaggedQuestions[q.id];
+
+                if (isAnswered) answeredCount++;
+
+                let baseClass = "w-full aspect-square rounded-lg font-bold text-xs flex items-center justify-center border transition transform active:scale-90 ";
+                
+                if (idx === currentQuestionIndex) {
+                    baseClass += "ring-2 ring-emerald-500 ring-offset-1 ";
+                }
+
+                if (isFlagged) {
+                    baseClass += "bg-amber-400 text-amber-950 border-amber-500";
+                } else if (isAnswered) {
+                    baseClass += "bg-emerald-600 text-white border-emerald-700";
+                } else {
+                    baseClass += "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200";
+                }
+
+                btn.className = baseClass;
+                btn.onclick = () => loadQuestion(idx);
+                grid.appendChild(btn);
+            });
+
+            document.getElementById('answeredCount').innerText = answeredCount;
+        }
+
+        function isQuestionAnswered(qId) {
+            const ans = userAnswers[qId];
+            if (!ans) return false;
+            if (Array.isArray(ans)) return ans.length > 0;
+            if (typeof ans === 'string') return ans.trim().length > 0;
+            return false;
+        }
+
+
+        function loadQuestion(index) {
+            if (index < 0 || index >= activeQuestions.length) return;
+            currentQuestionIndex = index;
+
+            const q = activeQuestions[index];
+
+            document.getElementById('currentQNum').innerText = index + 1;
+            
+            // Set type tag
+            const typeMap = {
+                'pg': 'Pilihan Ganda (Satu Jawaban)',
+                'pg_kompleks': 'Pilihan Ganda Kompleks (Bisa >1 Jawaban)',
+                'match': 'Menjodohkan / Memasangkan',
+                'short': 'Isian Singkat'
+            };
+            document.getElementById('questionTypeTag').innerText = typeMap[q.type] || 'Soal';
+
+            // Question Text
+            document.getElementById('questionContent').innerHTML = q.question;
+
+            // Flag checkbox state
+            document.getElementById('flagCheck').checked = !!flaggedQuestions[q.id];
+
+            // Render Answer Component
+            const container = document.getElementById('answerContainer');
+            container.innerHTML = '';
+
+            if (q.type === 'pg') {
+                q.options.forEach(opt => {
+                    const optKey = opt.trim().substring(0, 1); // "A", "B", "C", "D"
+                    const label = document.createElement('label');
+                    const isChecked = userAnswers[q.id] === optKey;
+
+                    label.className = `flex items-center space-x-3 p-3.5 rounded-xl border-2 cursor-pointer transition ${isChecked ? 'bg-emerald-50 border-emerald-600 text-emerald-900 font-semibold' : 'bg-white border-slate-200 hover:border-slate-300'}`;
+                    label.innerHTML = `
+                        <input type="radio" name="q_opt_${q.id}" value="${optKey}" ${isChecked ? 'checked' : ''} onchange="saveAnswer('${q.id}', '${optKey}')" class="w-4 h-4 text-emerald-600 focus:ring-emerald-500">
+                        <span class="text-sm">${opt}</span>
+                    `;
+                    container.appendChild(label);
+                });
+            } else if (q.type === 'pg_kompleks') {
+                const currentArr = userAnswers[q.id] || [];
+                q.options.forEach(opt => {
+                    const optKey = opt.trim().substring(0, 1);
+                    const isChecked = currentArr.includes(optKey);
+                    const label = document.createElement('label');
+
+                    label.className = `flex items-center space-x-3 p-3.5 rounded-xl border-2 cursor-pointer transition ${isChecked ? 'bg-emerald-50 border-emerald-600 text-emerald-900 font-semibold' : 'bg-white border-slate-200 hover:border-slate-300'}`;
+                    label.innerHTML = `
+                        <input type="checkbox" value="${optKey}" ${isChecked ? 'checked' : ''} onchange="toggleComplexAnswer('${q.id}', '${optKey}')" class="w-4 h-4 text-emerald-600 rounded focus:ring-emerald-500">
+                        <span class="text-sm">${opt}</span>
+                    `;
+                    container.appendChild(label);
+                });
+            } else if (q.type === 'match') {
+                const currentVal = userAnswers[q.id] || '';
+                const wrapper = document.createElement('div');
+                wrapper.className = "p-4 bg-slate-50 border border-slate-200 rounded-xl space-y-3";
+                wrapper.innerHTML = `
+                    <p class="text-xs font-bold text-slate-600 uppercase">Pilih Pasangan Istilah yang Tepat untuk Pernyataan Soal di Atas:</p>
+                    <select onchange="saveAnswer('${q.id}', this.value)" class="w-full p-3 border border-slate-300 rounded-xl text-sm bg-white font-medium focus:ring-2 focus:ring-emerald-500 outline-none">
+                        <option value="">-- Pilih Pasangan Jawaban --</option>
+                        ${q.matchOptions.map(mOpt => `<option value="${mOpt}" ${currentVal === mOpt ? 'selected' : ''}>${mOpt}</option>`).join('')}
+                    </select>
+                `;
+                container.appendChild(wrapper);
+            } else if (q.type === 'short') {
+                const currentVal = userAnswers[q.id] || '';
+                const input = document.createElement('input');
+                input.type = 'text';
+                input.value = currentVal;
+                input.placeholder = 'Ketikkan jawaban singkat di sini...';
+                input.className = 'w-full p-3.5 border-2 border-slate-300 rounded-xl text-sm font-semibold focus:border-emerald-600 outline-none';
+                input.oninput = (e) => saveAnswer(q.id, e.target.value);
+                container.appendChild(input);
+            }
+
+            // Update Nav Buttons State
+            document.getElementById('prevQBtn').disabled = (index === 0);
+            document.getElementById('nextQBtn').innerText = (index === activeQuestions.length - 1) ? 'Selesai' : 'Berikutnya';
+
+            renderQuestionPalette();
+        }
+
+        function saveAnswer(qId, val) {
+            userAnswers[qId] = val;
+            renderQuestionPalette();
+        }
+
+        function toggleComplexAnswer(qId, optKey) {
+            let arr = userAnswers[qId] || [];
+            if (!Array.isArray(arr)) arr = [];
+
+            if (arr.includes(optKey)) {
+                arr = arr.filter(item => item !== optKey);
+            } else {
+                arr.push(optKey);
+            }
+            userAnswers[qId] = arr;
+            renderQuestionPalette();
+        }
+
+        function toggleFlagCurrentQuestion() {
+            const q = activeQuestions[currentQuestionIndex];
+            flaggedQuestions[q.id] = !flaggedQuestions[q.id];
+            renderQuestionPalette();
+        }
+
+        function navigateQuestion(step) {
+            const newIdx = currentQuestionIndex + step;
+            if (newIdx >= 0 && newIdx < activeQuestions.length) {
+                loadQuestion(newIdx);
+            } else if (newIdx >= activeQuestions.length) {
+                confirmSubmitExam();
+            }
+        }
+
+        function confirmSubmitExam() {
+            const total = activeQuestions.length;
+            let answered = 0;
+            activeQuestions.forEach(q => {
+                if (isQuestionAnswered(q.id)) answered++;
+            });
+
+            const unAnswered = total - answered;
+            let msg = `Anda telah menjawab ${answered} dari ${total} soal.`;
+            if (unAnswered > 0) {
+                msg += ` Masih ada ${unAnswered} soal yang belum diisi! Apakah Anda yakin ingin menyelesaikan ujian?`;
+            } else {
+                msg += ` Yakin ingin menyelesaikan dan mengirim jawaban ujian remedial Anda?`;
+            }
+
+            showModalConfirm("Konfirmasi Selesai Ujian", msg, () => {
+                submitExam();
+            });
+        }
+
+
+        function submitExam() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            // Compute Scores
+            let earnedPoints = 0;
+            let maxPoints = 100; // Normalized total weight
+
+            let breakdown = {
+                pg: { total: 0, correct: 0, maxScore: 40, earnedScore: 0 },
+                pg_kompleks: { total: 0, correct: 0, maxScore: 20, earnedScore: 0 },
+                match: { total: 0, correct: 0, maxScore: 20, earnedScore: 0 },
+                short: { total: 0, correct: 0, maxScore: 20, earnedScore: 0 }
+            };
+
+            activeQuestions.forEach(q => {
+                const userAns = userAnswers[q.id];
+                let isCorrect = false;
+
+                if (q.type === 'pg') {
+                    breakdown.pg.total++;
+                    if (userAns === q.answer) {
+                        isCorrect = true;
+                        breakdown.pg.correct++;
+                        breakdown.pg.earnedScore += 2;
+                    }
+                } else if (q.type === 'pg_kompleks') {
+                    breakdown.pg_kompleks.total++;
+                    if (Array.isArray(userAns)) {
+                        const userSorted = [...userAns].sort().join(',');
+                        const keySorted = [...q.correctAnswers].sort().join(',');
+                        if (userSorted === keySorted) {
+                            isCorrect = true;
+                            breakdown.pg_kompleks.correct++;
+                            breakdown.pg_kompleks.earnedScore += 4;
+                        }
+                    }
+                } else if (q.type === 'match') {
+                    breakdown.match.total++;
+                    if (userAns === q.answer) {
+                        isCorrect = true;
+                        breakdown.match.correct++;
+                        breakdown.match.earnedScore += 2;
+                    }
+                } else if (q.type === 'short') {
+                    breakdown.short.total++;
+                    if (typeof userAns === 'string' && userAns.trim() !== '') {
+                        const cleanUser = userAns.trim().toLowerCase();
+                        const matchFound = q.answerKeywords.some(kw => cleanUser.includes(kw.toLowerCase()));
+                        if (matchFound) {
+                            isCorrect = true;
+                            breakdown.short.correct++;
+                            breakdown.short.earnedScore += 4;
+                        }
+                    }
+                }
+            });
+
+            const totalScore = breakdown.pg.earnedScore + breakdown.pg_kompleks.earnedScore + breakdown.match.earnedScore + breakdown.short.earnedScore;
+            const finalScore = Math.min(100, Math.round(totalScore));
+            const isPassed = finalScore >= appConfig.kkm;
+
+            // Save Attempt Record for student (only if not admin tryout)
+            if (!currentUser.isTryout) {
+                const userKey = `mtsn1_attempt_${currentUser.class}_${currentUser.presensi}`;
+                const recapRecord = {
+                    name: currentUser.name,
+                    class: currentUser.class,
+                    presensi: currentUser.presensi,
+                    score: finalScore,
+                    isPassed: isPassed,
+                    time: new Date().toLocaleString('id-ID')
+                };
+                localStorage.setItem(userKey, JSON.stringify(recapRecord));
+
+                // Save to global recap array
+                let recaps = JSON.parse(localStorage.getItem('mtsn1_recap_list') || '[]');
+                recaps.push(recapRecord);
+                localStorage.setItem('mtsn1_recap_list', JSON.stringify(recaps));
+            }
+
+            // Display Results View
+            displayResultView(finalScore, isPassed, breakdown);
+        }
+
+        function displayResultView(score, isPassed, breakdown) {
+            document.getElementById('examView').classList.add('hidden');
+            document.getElementById('resultView').classList.remove('hidden');
+
+            document.getElementById('resSchoolTitle').innerText = appConfig.school;
+            document.getElementById('resStdName').innerText = currentUser.name;
+            document.getElementById('resStdClass').innerText = currentUser.class;
+            document.getElementById('resStdPresensi').innerText = currentUser.presensi;
+            document.getElementById('resTime').innerText = new Date().toLocaleString('id-ID');
+            document.getElementById('resFinalScore').innerText = score;
+
+            const badge = document.getElementById('resStatusBadge');
+            const scoreCard = document.getElementById('resScoreCard');
+
+            if (isPassed) {
+                badge.innerText = `MEMENUHI KKM (${appConfig.kkm}) - LULUS REMEDIAL`;
+                badge.className = "mt-1 px-3 py-1 rounded-full text-xs font-bold bg-white text-emerald-800 shadow";
+                scoreCard.className = "bg-gradient-to-br from-emerald-600 to-teal-700 text-white rounded-xl p-5 flex flex-col items-center justify-center text-center shadow-lg";
+                try { confetti({ particleCount: 100, spread: 70, origin: { y: 0.6 } }); } catch(e){}
+            } else {
+                badge.innerText = `BELUM MEMENUHI KKM (${appConfig.kkm}) - BELUM TUNTAS`;
+                badge.className = "mt-1 px-3 py-1 rounded-full text-xs font-bold bg-white text-rose-800 shadow";
+                scoreCard.className = "bg-gradient-to-br from-rose-600 to-red-700 text-white rounded-xl p-5 flex flex-col items-center justify-center text-center shadow-lg";
+            }
+
+            // Render Breakdown Table
+            const tbody = document.getElementById('breakdownTableBody');
+            tbody.innerHTML = `
+                <tr>
+                    <td class="p-2.5 border font-semibold">Pilihan Ganda</td>
+                    <td class="p-2.5 border text-center">20</td>
+                    <td class="p-2.5 border text-center">${breakdown.pg.correct}</td>
+                    <td class="p-2.5 border text-center">40</td>
+                    <td class="p-2.5 border text-center font-bold text-emerald-700">${breakdown.pg.earnedScore}</td>
+                </tr>
+                <tr>
+                    <td class="p-2.5 border font-semibold">Pilihan Ganda Kompleks</td>
+                    <td class="p-2.5 border text-center">5</td>
+                    <td class="p-2.5 border text-center">${breakdown.pg_kompleks.correct}</td>
+                    <td class="p-2.5 border text-center">20</td>
+                    <td class="p-2.5 border text-center font-bold text-emerald-700">${breakdown.pg_kompleks.earnedScore}</td>
+                </tr>
+                <tr>
+                    <td class="p-2.5 border font-semibold">Menjodohkan</td>
+                    <td class="p-2.5 border text-center">10</td>
+                    <td class="p-2.5 border text-center">${breakdown.match.correct}</td>
+                    <td class="p-2.5 border text-center">20</td>
+                    <td class="p-2.5 border text-center font-bold text-emerald-700">${breakdown.match.earnedScore}</td>
+                </tr>
+                <tr>
+                    <td class="p-2.5 border font-semibold">Isian Singkat</td>
+                    <td class="p-2.5 border text-center">5</td>
+                    <td class="p-2.5 border text-center">${breakdown.short.correct}</td>
+                    <td class="p-2.5 border text-center">20</td>
+                    <td class="p-2.5 border text-center font-bold text-emerald-700">${breakdown.short.earnedScore}</td>
+                </tr>
+            `;
+
+            // Render Review List
+            const reviewContainer = document.getElementById('answerReviewList');
+            reviewContainer.innerHTML = '';
+
+            activeQuestions.forEach((q, idx) => {
+                const userAns = userAnswers[q.id];
+                let isCorrect = false;
+                let ansDisplay = '';
+                let keyDisplay = '';
+
+                if (q.type === 'pg') {
+                    isCorrect = (userAns === q.answer);
+                    ansDisplay = userAns ? `${userAns}` : '(Tidak Diisi)';
+                    keyDisplay = q.answer;
+                } else if (q.type === 'pg_kompleks') {
+                    const userArr = Array.isArray(userAns) ? [...userAns].sort() : [];
+                    const keyArr = [...q.correctAnswers].sort();
+                    isCorrect = (userArr.join(',') === keyArr.join(','));
+                    ansDisplay = userArr.length > 0 ? userArr.join(', ') : '(Tidak Diisi)';
+                    keyDisplay = keyArr.join(', ');
+                } else if (q.type === 'match') {
+                    isCorrect = (userAns === q.answer);
+                    ansDisplay = userAns || '(Tidak Diisi)';
+                    keyDisplay = q.answer;
+                } else if (q.type === 'short') {
+                    if (typeof userAns === 'string' && userAns.trim() !== '') {
+                        isCorrect = q.answerKeywords.some(kw => userAns.trim().toLowerCase().includes(kw.toLowerCase()));
+                    }
+                    ansDisplay = userAns || '(Tidak Diisi)';
+                    keyDisplay = q.answerKeywords[0];
+                }
+
+                const item = document.createElement('div');
+                item.className = `p-3.5 rounded-xl border text-xs md:text-sm ${isCorrect ? 'bg-emerald-50/50 border-emerald-200' : 'bg-rose-50/50 border-rose-200'}`;
+                item.innerHTML = `
+                    <div class="flex items-start justify-between gap-2 mb-1">
+                        <span class="font-bold text-slate-800">Soal No. ${idx + 1}</span>
+                        <span class="px-2 py-0.5 rounded text-[10px] font-bold uppercase ${isCorrect ? 'bg-emerald-200 text-emerald-900' : 'bg-rose-200 text-rose-900'}">
+                            ${isCorrect ? 'BENAR' : 'SALAH'}
+                        </span>
+                    </div>
+                    <p class="text-slate-700 mb-2">${q.question}</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-1 text-xs">
+                        <div>Jawaban Anda: <strong class="${isCorrect ? 'text-emerald-700' : 'text-rose-700'}">${ansDisplay}</strong></div>
+                        <div>Kunci Jawaban: <strong class="text-emerald-700">${keyDisplay}</strong></div>
+                    </div>
+                    <div class="mt-2 text-xs italic text-slate-500 bg-white/70 p-2 rounded border border-slate-200">
+                        <strong>Pembahasan:</strong> ${q.explanation}
+                    </div>
+                `;
+                reviewContainer.appendChild(item);
+            });
+        }
+
+
+        function openAdminDashboard() {
+            document.getElementById('authView').classList.add('hidden');
+            document.getElementById('examView').classList.add('hidden');
+            document.getElementById('resultView').classList.add('hidden');
+            document.getElementById('adminView').classList.remove('hidden');
+
+            renderRecapTable();
+            populateQuestionAdminDropdown();
+            loadQuestionToEditor(0);
+        }
+
+        function switchAdminTab(tab) {
+            const tabs = ['Recap', 'Questions', 'Settings', 'Password'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`admTab${t}`);
+                const sec = document.getElementById(`admSection${t}`);
+                if (t.toLowerCase() === tab) {
+                    btn.className = "py-3 px-4 font-bold text-sm border-b-2 border-amber-600 text-amber-700 bg-white";
+                    sec.classList.remove('hidden');
+                } else {
+                    btn.className = "py-3 px-4 font-bold text-sm border-b-2 border-transparent text-slate-500 hover:text-slate-800";
+                    sec.classList.add('hidden');
+                }
+            });
+        }
+
+        function renderRecapTable() {
+            const tbody = document.getElementById('recapTableBody');
+            const recaps = JSON.parse(localStorage.getItem('mtsn1_recap_list') || '[]');
+
+            if (recaps.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="8" class="text-center p-6 text-slate-400 italic">Belum ada data pengerjaan siswa.</td></tr>`;
+                return;
+            }
+
+            tbody.innerHTML = recaps.map((r, i) => `
+                <tr class="hover:bg-slate-50">
+                    <td class="p-3 border text-center">${i + 1}</td>
+                    <td class="p-3 border font-semibold text-slate-800">${r.name}</td>
+                    <td class="p-3 border">${r.class}</td>
+                    <td class="p-3 border text-center">${r.presensi}</td>
+                    <td class="p-3 border text-center font-bold text-emerald-700">${r.score}</td>
+                    <td class="p-3 border text-center">
+                        <span class="px-2 py-1 rounded-full text-[10px] font-bold ${r.isPassed ? 'bg-emerald-100 text-emerald-800' : 'bg-rose-100 text-rose-800'}">
+                            ${r.isPassed ? 'TUNTAS' : 'BELUM TUNTAS'}
+                        </span>
+                    </td>
+                    <td class="p-3 border text-xs text-slate-500">${r.time}</td>
+                    <td class="p-3 border text-center">
+                        <button onclick="resetSingleStudent('${r.class}', '${r.presensi}')" title="Reset kesempatan siswa" class="text-xs bg-rose-100 text-rose-700 hover:bg-rose-200 px-2 py-1 rounded font-bold">
+                            Reset Ujian
+                        </button>
+                    </td>
+                </tr>
+            `).join('');
+        }
+
+        function resetSingleStudent(sClass, presensi) {
+            showModalConfirm("Reset Kesempatan Siswa", `Yakin ingin mengizinkan siswa Kelas ${sClass} Presensi ${presensi} mengerjakan ujian ulang?`, () => {
+                const userKey = `mtsn1_attempt_${sClass}_${presensi}`;
+                localStorage.removeItem(userKey);
+
+                let recaps = JSON.parse(localStorage.getItem('mtsn1_recap_list') || '[]');
+                recaps = recaps.filter(r => !(r.class === sClass && r.presensi === presensi));
+                localStorage.setItem('mtsn1_recap_list', JSON.stringify(recaps));
+
+                renderRecapTable();
+                showModal("Sukses Reset", "Kesempatan pengerjaan siswa telah di-reset.", "circle-check");
+            });
+        }
+
+        function clearRecapData() {
+            showModalConfirm("Hapus Seluruh Rekap", "Apakah Anda yakin ingin menghapus seluruh data pengerjaan siswa?", () => {
+                localStorage.removeItem('mtsn1_recap_list');
+                renderRecapTable();
+                showModal("Data Dihapus", "Seluruh rekap data nilai telah dibersihkan.", "circle-check");
+            });
+        }
+
+        function exportRecapCSV() {
+            const recaps = JSON.parse(localStorage.getItem('mtsn1_recap_list') || '[]');
+            if (recaps.length === 0) {
+                showModal("Peringatan", "Belum ada data rekap untuk diunduh!", "exclamation");
+                return;
+            }
+
+            let csv = "No,Nama Siswa,Kelas,Presensi,Skor Akhir,Status KKM,Waktu\n";
+            recaps.forEach((r, idx) => {
+                csv += `"${idx+1}","${r.name}","${r.class}","${r.presensi}","${r.score}","${r.isPassed ? 'TUNTAS':'BELUM TUNTAS'}","${r.time}"\n`;
+            });
+
+            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const link = document.createElement("a");
+            const url = URL.createObjectURL(blob);
+            link.setAttribute("href", url);
+            link.setAttribute("download", `Rekap_Remedial_IPA_MTsN1_Malang_${new Date().toISOString().slice(0,10)}.csv`);
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+        }
+
+        // Populate Editor Question Dropdown
+        function populateQuestionAdminDropdown() {
+            const sel = document.getElementById('adminQuestionSelect');
+            sel.innerHTML = activeQuestions.map((q, i) => `<option value="${i}">Soal No. ${i+1} (${q.type.toUpperCase()})</option>`).join('');
+        }
+
+        function loadQuestionToEditor(idx) {
+            idx = parseInt(idx);
+            const q = activeQuestions[idx];
+            const container = document.getElementById('editorFormContainer');
+
+            container.innerHTML = `
+                <form onsubmit="saveQuestionEdit(event, ${idx})" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Teks Soal / Stimulus</label>
+                        <textarea id="editQText" rows="3" required class="w-full p-2.5 border rounded-lg text-sm">${q.question}</textarea>
+                    </div>
+
+                    ${q.type === 'pg' ? `
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Pilihan Jawaban (A, B, C, D)</label>
+                            ${q.options.map((opt, i) => `
+                                <input type="text" id="editOpt_${i}" value="${opt}" required class="w-full p-2 border rounded-lg text-xs mb-1.5">
+                            `).join('')}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Kunci Jawaban Benar (A/B/C/D)</label>
+                            <input type="text" id="editKeyPG" value="${q.answer}" required class="w-24 p-2 border rounded-lg text-xs font-bold">
+                        </div>
+                    ` : ''}
+
+                    ${q.type === 'pg_kompleks' ? `
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Pilihan Jawaban</label>
+                            ${q.options.map((opt, i) => `
+                                <input type="text" id="editOpt_${i}" value="${opt}" required class="w-full p-2 border rounded-lg text-xs mb-1.5">
+                            `).join('')}
+                        </div>
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Kunci Jawaban Kompleks (Pisahkan dengan koma, contoh: A,C,E)</label>
+                            <input type="text" id="editKeyComplex" value="${q.correctAnswers.join(',')}" required class="w-full p-2 border rounded-lg text-xs font-bold">
+                        </div>
+                    ` : ''}
+
+                    ${q.type === 'match' ? `
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Kunci Pasangan Jawaban</label>
+                            <input type="text" id="editKeyMatch" value="${q.answer}" required class="w-full p-2 border rounded-lg text-xs font-bold">
+                        </div>
+                    ` : ''}
+
+                    ${q.type === 'short' ? `
+                        <div>
+                            <label class="block text-xs font-bold text-slate-600 mb-1">Kata Kunci Jawaban Benar (Pisahkan dengan koma)</label>
+                            <input type="text" id="editKeyShort" value="${q.answerKeywords.join(',')}" required class="w-full p-2 border rounded-lg text-xs font-bold">
+                        </div>
+                    ` : ''}
+
+                    <div>
+                        <label class="block text-xs font-bold text-slate-600 mb-1">Pembahasan / Penjelasan Kunci</label>
+                        <textarea id="editExp" rows="2" required class="w-full p-2.5 border rounded-lg text-xs">${q.explanation}</textarea>
+                    </div>
+
+                    <button type="submit" class="bg-amber-600 hover:bg-amber-700 text-white text-xs font-bold px-4 py-2 rounded-lg transition">
+                        Simpan Perubahan Soal No. ${idx + 1}
+                    </button>
+                </form>
+            `;
+        }
+
+        function saveQuestionEdit(e, idx) {
+            e.preventDefault();
+            const q = activeQuestions[idx];
+
+            q.question = document.getElementById('editQText').value.trim();
+            q.explanation = document.getElementById('editExp').value.trim();
+
+            if (q.type === 'pg') {
+                q.options = [
+                    document.getElementById('editOpt_0').value.trim(),
+                    document.getElementById('editOpt_1').value.trim(),
+                    document.getElementById('editOpt_2').value.trim(),
+                    document.getElementById('editOpt_3').value.trim()
+                ];
+                q.answer = document.getElementById('editKeyPG').value.trim().toUpperCase();
+            } else if (q.type === 'pg_kompleks') {
+                q.options = [
+                    document.getElementById('editOpt_0').value.trim(),
+                    document.getElementById('editOpt_1').value.trim(),
+                    document.getElementById('editOpt_2').value.trim(),
+                    document.getElementById('editOpt_3').value.trim(),
+                    document.getElementById('editOpt_4').value.trim()
+                ];
+                q.correctAnswers = document.getElementById('editKeyComplex').value.split(',').map(s => s.trim().toUpperCase());
+            } else if (q.type === 'match') {
+                q.answer = document.getElementById('editKeyMatch').value.trim();
+            } else if (q.type === 'short') {
+                q.answerKeywords = document.getElementById('editKeyShort').value.split(',').map(s => s.trim());
+            }
+
+            saveQuestionsToStorage();
+            showModal("Soal Diperbarui", `Perubahan pada soal No. ${idx + 1} berhasil disimpan!`, "circle-check");
+        }
+
+        function launchAdminTryout() {
+            currentUser = {
+                name: "Uji Coba Admin (Guru)",
+                class: "VII A",
+                presensi: "00",
+                isAdmin: true,
+                isTryout: true
+            };
+            startExamSession();
+        }
+
+        function logoutAdmin() {
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('authView').classList.remove('hidden');
+        }
+
+        function saveAppSettings(e) {
+            e.preventDefault();
+            appConfig.title = document.getElementById('cfgTitle').value.trim();
+            appConfig.school = document.getElementById('cfgSchool').value.trim();
+            appConfig.teacher = document.getElementById('cfgTeacher').value.trim();
+            appConfig.kkm = parseInt(document.getElementById('cfgKKM').value);
+            appConfig.duration = parseInt(document.getElementById('cfgDuration').value);
+            appConfig.icon = document.getElementById('cfgIcon').value.trim() || "fa-solid fa-flask-vial";
+
+            saveConfigToStorage();
+            updateUIFromConfig();
+            showModal("Pengaturan Disimpan", "Pengaturan header dan aplikasi telah berhasil diperbarui.", "circle-check");
+        }
+
+        function changeAdminPassword(e) {
+            e.preventDefault();
+            const oldP = document.getElementById('oldPass').value;
+            const newP = document.getElementById('newPass').value;
+            const confP = document.getElementById('confirmPass').value;
+
+            if (oldP !== appConfig.adminPass) {
+                showModal("Error", "Password lama tidak sesuai!", "triangle-exclamation");
+                return;
+            }
+
+            if (newP !== confP) {
+                showModal("Error", "Konfirmasi password baru tidak cocok!", "triangle-exclamation");
+                return;
+            }
+
+            appConfig.adminPass = newP;
+            saveConfigToStorage();
+            showModal("Password Diperbarui", "Kata sandi admin berhasil diubah.", "circle-check");
+            document.getElementById('oldPass').value = '';
+            document.getElementById('newPass').value = '';
+            document.getElementById('confirmPass').value = '';
+        }
+
+
+        function showModal(title, msg, icon = "circle-check") {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = msg;
+            
+            const iconEl = document.getElementById('modalIcon');
+            iconEl.className = `fa-solid fa-${icon}`;
+
+            document.getElementById('modalActions').innerHTML = `
+                <button onclick="closeModal()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-6 py-2 rounded-xl text-xs transition">
+                    Mengerti
+                </button>
+            `;
+
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function showModalConfirm(title, msg, onConfirm) {
+            document.getElementById('modalTitle').innerText = title;
+            document.getElementById('modalMessage').innerText = msg;
+            
+            const iconEl = document.getElementById('modalIcon');
+            iconEl.className = `fa-solid fa-circle-question text-amber-500`;
+
+            window._pendingConfirmAction = onConfirm;
+
+            document.getElementById('modalActions').innerHTML = `
+                <button onclick="closeModal()" class="bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold px-4 py-2 rounded-xl text-xs transition">
+                    Batal
+                </button>
+                <button onclick="executeConfirm()" class="bg-emerald-600 hover:bg-emerald-700 text-white font-bold px-5 py-2 rounded-xl text-xs transition">
+                    Ya, Lanjutkan
+                </button>
+            `;
+
+            document.getElementById('customModal').classList.remove('hidden');
+        }
+
+        function executeConfirm() {
+            closeModal();
+            if (window._pendingConfirmAction) {
+                window._pendingConfirmAction();
+                window._pendingConfirmAction = null;
+            }
+        }
+
+        function closeModal() {
+            document.getElementById('customModal').classList.add('hidden');
+        }
+
+        function returnToHome() {
+            if (timerInterval) clearInterval(timerInterval);
+            document.getElementById('resultView').classList.add('hidden');
+            document.getElementById('examView').classList.add('hidden');
+            document.getElementById('adminView').classList.add('hidden');
+            document.getElementById('authView').classList.remove('hidden');
+        }
+    </script>
+</body>
+</html>
